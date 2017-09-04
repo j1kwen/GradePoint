@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="favicon.ico" />
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>绩点查询API</title>
+    <style>
+        .btn-return-top {
+            position: fixed;
+            bottom: 10%;
+            right: 2.5%;
+            z-index: 999;
+            width: 50px;
+            height: 50px;
+            opacity: 0.4;
+            text-align:center;
+            padding:18px;
+            border: 0px;
+            border-radius: 6px;
+            background-color: #eee;
+        }
+        .btn-return-top>.glyphicon {
+            top: -1px;
+        }
+        .btn-return-top:hover {
+            opacity: 0.8;
+        }
+        .dn{display: none;}
+    </style>
+</head>
+<body style="padding-top: 70px;">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#api-header">绩点API</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" id="nav-link-list">
+                <li><a href="#api-use">接口调用</span></a></li>
+                <li><a href="#api-return">返回值</a></li>
+                <li><a href="#api-token-apply">token申请</a></li>
+                <li><a href="#api-return-success">调用成功</a></li>
+                <li><a href="#api-return-fail">调用失败</a></li>
+                <li><a href="#api-remark">说明</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="btn btn-return-top dn" title="返回顶部"><span class="glyphicon glyphicon-chevron-up"></span></div>
+<div class="container">
+    <div class="jumbotron" id="api-header">
+        <h2><span class="glyphicon glyphicon-equalizer"></span> 绩点查询API</h2>
+        <p>山东理工大学学生绩点查询接口文档</p>
+    </div>
+    <div id="api-use" class="page-header">
+        <h2>接口调用</h2>
+    </div>
+    <h3>地址</h3>
+    <pre>http://api.dogest.cn/grade/grade/query</pre>
+    <h3>请求类型</h3>
+    <p><strong>*现已可以使用ajax跨域请求数据，已设置头部<code>Access-Control-Allow-Origin: *</code></strong></p>
+    <pre>HTTP GET</pre>
+    <h3>参数</h3>
+    <p><strong>所有参数均为必需字段。</strong></p>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-1">
+                <col class="col-xs-9">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>类型</th>
+                <th>含义</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>id</code></td>
+                <td><code>String</code></td>
+                <td>待查询学生的学号</td>
+            </tr>
+            <tr>
+                <td><code>token</code></td>
+                <td><code>String</code></td>
+                <td>接口调用的token（暂不启用token权限验证）</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3>请求示例</h3>
+    <p>注：接口测试阶段不启用token验证，请求字段<code>token</code>可以不填，示例如下</p>
+    <pre>http://api.dogest.cn/grade/grade/query?id=141105xxxxx&token=bfc925b542a531a9728cc54248322695</pre>
+    <pre>http://api.dogest.cn/grade/grade/query?id=141105xxxxx</pre>
+    <p>如果使用JQuery的ajax请求数据，由于服务器已经设置好了接受跨域请求，所以可以直接请求到json而不必使用jsonp，示例如下：</p>
+    <pre>
+$.ajax({
+    type: "get",
+    url: "http://api.dogest.cn/grade/grade/query?id=141105xxxxx",
+    success: function(data) {
+        // 请求成功，返回data对象
+        if(data.code == 0) {
+            // 查询成功要做的事情
+        } else {
+            // 查询失败要做的事情，错误信息包含在data.message中
+        }
+    },
+    error: function() {
+        // 请求失败要做的事情
+    }
+});</pre>
+    <div id="api-return" class="page-header">
+        <h2>返回值</h2>
+    </div>
+    <p>接口返回值为json字符串，编码为<code>UTF-8</code>。</p>
+    <h3>基本字段</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-1">
+                <col class="col-xs-10">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>字段</th>
+                <th>类型</th>
+                <th>含义</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>code</code></td>
+                <td><code>Integer</code></td>
+                <td>返回的状态码</td>
+            </tr>
+            <tr>
+                <td><code>status</code></td>
+                <td><code>String</code></td>
+                <td>返回的状态值</td>
+            </tr>
+            <tr>
+                <td><code>message</code></td>
+                <td><code>String</code></td>
+                <td>接口回传的消息</td>
+            </tr>
+            <tr>
+                <td><code>data</code></td>
+                <td><code>Object</code></td>
+                <td>返回的数据（Data），只有调用成功才有此字段</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3>状态码/值</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-2">
+                <col class="col-xs-9">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>code值</th>
+                <th>status值</th>
+                <th>含义</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>-1</code></td>
+                <td><code>PARAM_ERR</code></td>
+                <td>请求参数错误</td>
+            </tr>
+            <tr>
+                <td><code>0</code></td>
+                <td><code>OK</code></td>
+                <td>查询成功</td>
+            </tr>
+            <tr>
+                <td><code>1</code></td>
+                <td><code>ID_ERR</code></td>
+                <td>学号有误，无法获取数据</td>
+            </tr>
+            <tr>
+                <td><code>2</code></td>
+                <td><code>CONNECT_ERR</code></td>
+                <td>连接原始服务器失败</td>
+            </tr>
+            <tr>
+                <td><code>3</code></td>
+                <td><code>CALC_ERR</code></td>
+                <td>服务器内部计算过程出错</td>
+            </tr>
+            <tr>
+                <td><code>4</code></td>
+                <td><code>PARSE_ERR</code></td>
+                <td>Html文档解析出错</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="api-token-apply" class="page-header">
+        <h2>token申请</h2>
+    </div>
+    <h3><del>申请地址</del></h3>
+    <pre><a href="http://api.dogest.cn/grade/token/apply"><del>http://api.dogest.cn/grade/token/apply</del></a></pre>
+    <p><strong>注：测试阶段接口调用不进行token验证，不开放token申请。</strong></p>
+    <div id="api-return-success" class="page-header">
+        <h2>调用成功</h2>
+    </div>
+    <p>接口参数正确且接口服务器与目标服务器均正常工作时，将返回调用成功的数据，返回内容除了上述基本字段外还将增加数据（<code>data</code>）字段，包含所查学号的各项信息，包括本专业信息、二专业信息以及个人信息等，详情示例及字段释义如下：</p>
+    <h3>返回值示例</h3>
+            <pre>
+{
+    code: 0,
+    data: {
+        major: {
+            grade: 87.2534296029,
+            point: 116,
+            totalPoint: 116,
+            elective: 7.5,
+            list: [
+                {
+                    term: "2014-2015-1",
+                    type: "公选课",
+                    name: "大学生职业生涯规划",
+                    point: "1.0",
+                    origGrade: "合格",
+                    reGrade: ""
+                },
+                {
+                    term: "2014-2015-1",
+                    type: "必修课",
+                    name: "大学英语听说(A)Ⅰ",
+                    point: "1.0",
+                    origGrade: "56",
+                    reGrade: "60"
+                },
+                {
+                    term: "2014-2015-1",
+                    type: "必修课",
+                    name: "高等数学(A)Ⅰ",
+                    point: "5.0",
+                    origGrade: "98.2",
+                    reGrade: ""
+                }
+            ]
+        },
+        minor: {
+            grade: 79.08,
+            point: 35,
+            totalPoint: 35,
+            elective: 0,
+            list: [
+                {
+                    term: "2015-2016-1",
+                    type: "必修",
+                    name: "管理学原理",
+                    point: "3",
+                    origGrade: "86",
+                    reGrade: ""
+                },
+                {
+                    term: "2015-2016-1",
+                    type: "必修",
+                    name: "经济法",
+                    point: "2",
+                    origGrade: "93",
+                    reGrade: ""
+                }
+            ]
+        },
+        student: {
+            id: "141105xxxxx",
+            name: "xxx",
+            gender: "x",
+            grade: "2014",
+            college: "",
+            major: "软件工程",
+            cls: "软件14xx",
+            level: "本科",
+            stm: "4"
+        }
+    },
+    message: "success",
+    status: "OK"
+}</pre>
+    <h3>字段类型及含义</h3>
+    <p>各对象以及字段的类型与含义如下表：</p>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-1">
+                <col class="col-xs-10">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>字段</th>
+                    <th>类型</th>
+                    <th>含义</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3"><strong>数据（Object:Data）</strong></td>
+                </tr>
+                <tr>
+                    <td><code>major</code></td>
+                    <td><code>Object</code></td>
+                    <td>主修专业信息（<code>Major</code>）</td>
+                </tr>
+                <tr>
+                    <td><code>minor</code></td>
+                    <td><code>Object</code></td>
+                    <td>辅修专业信息（<code>Minor</code>）</td>
+                </tr>
+                <tr>
+                    <td><code>student</code></td>
+                    <td><code>Object</code></td>
+                    <td>学生基本信息（<code>Student</code>）</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>主修/辅修（Object:Major, Minor）</strong></td>
+                </tr>
+                <tr>
+                    <td><code>grade</code></td>
+                    <td><code>Float</code></td>
+                    <td>平均学分绩点值</td>
+                </tr>
+                <tr>
+                    <td><code>point</code></td>
+                    <td><code>Float</code></td>
+                    <td>已修学分（不包括公选课）<strong><sup>1</sup></strong></td>
+                </tr>
+                <tr>
+                    <td><code>totalPoint</code></td>
+                    <td><code>Float</code></td>
+                    <td>应修总学分（不包括公选课）<strong><sup>2</sup></strong></td>
+                </tr>
+                <tr>
+                    <td><code>elective</code></td>
+                    <td><code>Float</code></td>
+                    <td>已修公选课学分 <strong><sup>3</sup></strong></td>
+                </tr>
+                <tr>
+                    <td><code>list</code></td>
+                    <td><code>Array</code></td>
+                    <td>修读课程信息列表（<code>Array&lt;Course&gt;</code>）</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>学生（Object:Student）</strong></td>
+                </tr>
+                <tr>
+                    <td><code>id</code></td>
+                    <td><code>String</code></td>
+                    <td>学号</td>
+                </tr>
+                <tr>
+                    <td><code>name</code></td>
+                    <td><code>String</code></td>
+                    <td>学生姓名</td>
+                </tr>
+                <tr>
+                    <td><code>gender</code></td>
+                    <td><code>String</code></td>
+                    <td>性别</td>
+                </tr>
+                <tr>
+                    <td><code>grade</code></td>
+                    <td><code>String</code></td>
+                    <td>年级</td>
+                </tr>
+                <tr>
+                    <td><code>college</code></td>
+                    <td><code>String</code></td>
+                    <td>学院</td>
+                </tr>
+                <tr>
+                    <td><code>major</code></td>
+                    <td><code>String</code></td>
+                    <td>主修专业</td>
+                </tr>
+                <tr>
+                    <td><code>cls</code></td>
+                    <td><code>String</code></td>
+                    <td>班级</td>
+                </tr>
+                <tr>
+                    <td><code>level</code></td>
+                    <td><code>String</code></td>
+                    <td>层次</td>
+                </tr>
+                <tr>
+                    <td><code>stm</code></td>
+                    <td><code>String</code></td>
+                    <td>学制</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>课程（Object:Course）</strong></td>
+                </tr>
+                <tr>
+                    <td><code>term</code></td>
+                    <td><code>String</code></td>
+                    <td>学期，如2017-2018-1指2017-2018学年第1学期</td>
+                </tr>
+                <tr>
+                    <td><code>type</code></td>
+                    <td><code>String</code></td>
+                    <td>课程类型（必修/选修/实践)</td>
+                </tr>
+                <tr>
+                    <td><code>name</code></td>
+                    <td><code>String</code></td>
+                    <td>课程名称</td>
+                </tr>
+                <tr>
+                    <td><code>point</code></td>
+                    <td><code>String</code></td>
+                    <td>课程学分</td>
+                </tr>
+                <tr>
+                    <td><code>origGrade</code></td>
+                    <td><code>String</code></td>
+                    <td>原考成绩</td>
+                </tr>
+                <tr>
+                    <td><code>reGrade</code></td>
+                    <td><code>String</code></td>
+                    <td>补考/重考成绩</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>注1：<u>已修学分</u>指的是本专业所有<strong>已通过</strong>（百分制60分及以上，等级制合格或及格以上）课程的总学分，其中包含必修、实践环节，但<strong>不包括公选课</strong>。</p>
+    <p>注2：<u>应修总学分</u>指的是本专业所有（<strong>已通过和未通过</strong>）必修和实践环节的总学分，同样不包括公选课。<strong>总学分修满是毕业的前提条件。</strong></p>
+    <p>注3：<u>已修公选课学分</u>指的是所有<strong>已通过</strong>的公选课的总学分，未通过的公选课不计入<strong>且并不影响学分和绩点的计算。修满一定的选修学分也是毕业的前提条件</strong>。</p>
+    <div id="api-return-fail" class="page-header">
+        <h2>调用失败</h2>
+    </div>
+    <h3>参数错误：PARAM_ERR</h3>
+    <p>由于缺少必要参数而被拒绝访问，示例如下：</p>
+    <pre>
+{
+    code: -1,
+    message: "参数[id]不能为空！",
+    status: "PARAM_ERR"
+}
+    </pre>
+    <h3>学号错误：ID_ERR</h3>
+    <p>由于学号参数有误而导致的错误，无法根据学号查询到对应的学生信息，返回值示例：</p>
+    <pre>
+{
+    code: 1,
+    message: "找不到该学号的学生信息，请输入正确的学号！",
+    status: "ID_ERR"
+}
+    </pre>
+    <h3>连接错误：CONNECT_ERR</h3>
+    <p>无法连接到成绩查询服务器，可能是原始目标服务器出现了异常（并非接口服务器的问题），返回值示例：</p>
+    <pre>
+{
+    code: 2,
+    message: "从原始服务器获取数据失败，请稍后重试！",
+    status: "CONNECT_ERR"
+}
+    </pre>
+    <h3>计算错误：CALC_ERR</h3>
+    <p>由于一些未知原因导致接口服务器在成功获取数据后的计算过程中发生意外，通常出现概率极低，返回值示例：</p>
+    <pre>
+{
+    code: 3,
+    message: "计算过程发生错误！请稍后重试！",
+    status: "CALC_ERR"
+}
+    </pre>
+    <h3>解析错误：PARSE_ERR</h3>
+    <p>由于目标服务器的页面内容改动或者其他原因导致解析Html文档时出错，一般需要等待升级接口以解决问题，返回值示例：</p>
+    <pre>
+{
+    code: 4,
+    message: "解析Html文档出错！请检查学号或稍后重试！",
+    status: "PARSE_ERR"
+}
+    </pre>
+    <div id="api-remark" class="page-header">
+        <h2>说明</h2>
+    </div>
+    <p>1. 接口测试阶段不进行token验证，所有人均可以无限次数地调用此接口。</p>
+    <p>2. 本着共享的原则请勿恶意占用服务器资源，如发现恶意行为将会使ip被列入黑名单！</p>
+    <p>3. 请接口使用者在自己应用中的合适位置附上该wiki页面的<a href="http://api.dogest.cn/grade/grade/query" target="_blank">链接</a>，正式发布后将会根据情况开放源码。</p>
+    <p>4. 如需跟踪接口的更新动态（如bug修复、机制更新、token开启等），请<a href="mailto:763461297@qq.com?subject=【绩点查询API】我要跟踪动态&body=<p>【请填写以下基本信息，如需多个邮箱请使用英文分号<code>;</code>间隔】</p><p>姓名：</p><p>邮箱：</p><p>手机号：</p>">点击此处</a>发送邮件，有任何动态将会及时邮件提醒您。</p>
+    <p>5. 如发现接口的任何问题请点击下方的Copyright邮件反馈！感谢！</p>
+</div>
+<hr/>
+<footer class="footer" style="margin: 40px 20px;">
+    <div class="container">
+        <div class="text-center">
+            Copyright © 2016-2017
+            <strong><a href="mailto:763461297@qq.com?subject=【绩点查询API】接口问题反馈">Shannon</a></strong>&nbsp;
+            All Rights Reserved.
+        </div>
+        <div class="text-center">
+            Icon source by <a href="http://glyphicons.com/" target="_blank">Glyphicons</a>.
+            &nbsp;京ICP备17047375号-1
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+    $(function() {
+        $("#nav-link-list a, .navbar-header a").click(function() {
+            $("html, body").animate({
+                scrollTop: $($(this).attr("href")).offset().top - 70 + "px"
+            }, 500);
+            return false;
+        });
+        $(window).on('scroll',function(){
+            var st = $(document).scrollTop();
+            if(st > 0){
+                $('.btn-return-top').fadeIn(function(){
+                    $(this).removeClass('dn');
+                });
+            }else{
+                $('.btn-return-top').fadeOut(function(){
+                    $(this).addClass('dn');
+                });
+            }
+        });
+        $(".btn-return-top").click(function () {
+            var speed=300;//滑动的速度
+            $('body,html').animate({ scrollTop: 0 }, speed);
+            return false;
+        });
+    });
+
+</script>
+</body>
+</html>
