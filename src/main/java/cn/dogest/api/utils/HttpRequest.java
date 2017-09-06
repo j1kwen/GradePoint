@@ -1,6 +1,6 @@
-package cn.dogest.grade.utils;
+package cn.dogest.api.utils;
 
-import cn.dogest.grade.exception.ConnectionException;
+import cn.dogest.api.exception.ConnectionException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

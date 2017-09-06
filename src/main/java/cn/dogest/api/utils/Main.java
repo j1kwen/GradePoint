@@ -1,9 +1,8 @@
-package cn.dogest.grade.utils;
+package cn.dogest.api.utils;
 
 import java.util.List;
 
-import cn.dogest.grade.model.Course;
-import cn.dogest.grade.model.Student;
+import cn.dogest.api.model.Student;
 
 public class Main {
 

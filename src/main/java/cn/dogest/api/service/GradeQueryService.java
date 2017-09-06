@@ -1,12 +1,12 @@
-package cn.dogest.grade.service;
+package cn.dogest.api.service;
 
-import cn.dogest.grade.exception.*;
-import cn.dogest.grade.model.ResultModel;
-import cn.dogest.grade.model.StatusCode;
-import cn.dogest.grade.model.Student;
-import cn.dogest.grade.utils.GradeCalculator;
-import cn.dogest.grade.utils.HtmlConverter;
-import cn.dogest.grade.utils.NetworkProcesser;
+import cn.dogest.api.exception.*;
+import cn.dogest.api.model.ResultModel;
+import cn.dogest.api.model.StatusCode;
+import cn.dogest.api.model.Student;
+import cn.dogest.api.utils.GradeCalculator;
+import cn.dogest.api.utils.HtmlConverter;
+import cn.dogest.api.utils.NetworkProcesser;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

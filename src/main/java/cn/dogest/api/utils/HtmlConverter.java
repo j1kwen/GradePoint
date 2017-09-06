@@ -1,13 +1,12 @@
-package cn.dogest.grade.utils;
+package cn.dogest.api.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.dogest.grade.exception.ConnectionException;
-import cn.dogest.grade.exception.IdNotFoundException;
-import cn.dogest.grade.exception.ParseHtmlException;
-import cn.dogest.grade.model.StatusCode;
-import cn.dogest.grade.model.Student;
+import cn.dogest.api.exception.ConnectionException;
+import cn.dogest.api.exception.IdNotFoundException;
+import cn.dogest.api.exception.ParseHtmlException;
+import cn.dogest.api.model.Student;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -15,7 +14,7 @@ import org.htmlparser.util.NodeIterator;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-import cn.dogest.grade.model.Course;
+import cn.dogest.api.model.Course;
 
 public class HtmlConverter {
 	

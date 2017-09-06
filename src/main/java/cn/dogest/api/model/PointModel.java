@@ -1,4 +1,4 @@
-package cn.dogest.grade.model;
+package cn.dogest.api.model;
 
 /**
  * Created by xiaonan.jia on 2017/9/1.

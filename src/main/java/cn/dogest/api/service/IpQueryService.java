@@ -1,7 +1,7 @@
-package cn.dogest.grade.service;
+package cn.dogest.api.service;
 
-import cn.dogest.grade.exception.ConnectionException;
-import cn.dogest.grade.utils.HttpRequest;
+import cn.dogest.api.exception.ConnectionException;
+import cn.dogest.api.utils.HttpRequest;
 import org.springframework.stereotype.Service;
 
 /**

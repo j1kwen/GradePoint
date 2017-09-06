@@ -1,6 +1,6 @@
-package cn.dogest.grade.controller;
+package cn.dogest.api.controller;
 
-import cn.dogest.grade.service.IpQueryService;
+import cn.dogest.api.service.IpQueryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

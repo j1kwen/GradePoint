@@ -1,4 +1,4 @@
-package cn.dogest.grade.model;
+package cn.dogest.api.model;
 
 public enum CourseType {
 	OBLIGATORY,

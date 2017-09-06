@@ -1,6 +1,6 @@
-package cn.dogest.grade.exception;
+package cn.dogest.api.exception;
 
-import cn.dogest.grade.model.StatusCode;
+import cn.dogest.api.model.StatusCode;
 
 /**
  * Created by xiaonan.jia on 2017/8/30.

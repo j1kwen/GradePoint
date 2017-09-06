@@ -1,14 +1,11 @@
-package cn.dogest.grade.utils;
+package cn.dogest.api.utils;
 
 import java.util.*;
 
-import cn.dogest.grade.exception.CalculateException;
-import cn.dogest.grade.model.Course;
-import cn.dogest.grade.model.CourseType;
-import cn.dogest.grade.model.PointModel;
-import cn.dogest.grade.model.StatusCode;
-
-import javax.security.auth.login.AccountException;
+import cn.dogest.api.exception.CalculateException;
+import cn.dogest.api.model.Course;
+import cn.dogest.api.model.CourseType;
+import cn.dogest.api.model.PointModel;
 
 public class GradeCalculator {
 
