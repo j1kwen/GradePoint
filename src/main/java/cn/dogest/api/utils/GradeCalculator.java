@@ -57,17 +57,28 @@ public class GradeCalculator {
 		double c_point = 0.0; // 已修学分，不包括公选课
 		double elective = 0.0; // 已修公选课学分
 
-		Collections.reverse(list); // 逆置 为了从后往前遍历，有重修的取最后一次
+		//Collections.reverse(list); // 逆置 为了从后往前遍历，有重修的取最后一次（废弃）
 		List<Course> set = new ArrayList<>();
 		try {
+			// 生成计算绩点的课程成绩集合
 			for(Course course : list) {
-				// 如果存在，则说明该科目为重修科目，靠前的舍弃掉
+				// 检查集合是否存在某课程
 				if(set.contains(course)) {
-					continue;
+					// 存在，更新最大值
+					int idx = set.indexOf(course);
+					Course inset = set.get(idx);
+					//System.out.println(String.format("已存在：%s => %s / %s", inset.getName(), inset.getOrigGrade(), inset.getReGrade()));
+					//System.out.println(String.format("重修：%s => %s / %s", course.getName(), course.getOrigGrade(), course.getReGrade()));
+					set.set(idx, inset.getReplacedCourse(course));
+				} else {
+					// 不存在，直接放入集合
+					set.add(course);
+					//System.out.println(String.format("添加课程：%s => %s / %s", course.getName(), course.getOrigGrade(), course.getReGrade()));
 				}
-				// 加入集合以便判断
-				set.add(course);
+			}
 
+			for(Course course : set) {
+				//System.out.println(String.format("待计算课程：%s => %s / %s", course.getName(), course.getOrigGrade(), course.getReGrade()));
 				// 计算课程学分绩点，0则不合格
 				double tmp = course.getProductValue();
 
@@ -78,6 +89,7 @@ public class GradeCalculator {
 						elective += course.getPointValue(); // 计入公选课学分
 					} else {
 						// 公选课不合格无影响
+						//System.out.println(String.format("不合格的公选课：%s => %s / %s", course.getName(), course.getOrigGrade(), course.getReGrade()));
 					}
 				} else {
 					// 如果是必修或实践环节，需要计算绩点

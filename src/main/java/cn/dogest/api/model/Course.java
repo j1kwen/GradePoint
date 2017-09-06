@@ -119,4 +119,13 @@ public class Course {
 		Course o = (Course) obj;
 		return (o.getName().equals(this.name) && o.getCourseType() == this.getCourseType());
 	}
+
+	public Course getReplacedCourse(Course course) {
+		if(this.getGradeValue() <= course.getGradeValue()) {
+			//System.out.println("重修成绩较高，取重修成绩。");
+			return course;
+		}
+		//System.out.println("原成绩较高，舍弃重修成绩。");
+		return this;
+	}
 }
