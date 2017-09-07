@@ -5,6 +5,7 @@ import cn.dogest.api.utils.HttpRequest;
 import org.springframework.stereotype.Service;
 
 /**
+ * ip信息服务类
  * Created by xiaonan.jia on 2017/8/31.
  */
 @Service

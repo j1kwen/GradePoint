@@ -1,13 +1,14 @@
 package cn.dogest.api.model;
 
 /**
+ * 成绩、学分模型
  * Created by xiaonan.jia on 2017/9/1.
  */
 public class PointModel {
-    private double grade = 0.0;
-    private double point = 0.0;
-    private double pointTotal = 0.0;
-    private double elective = 0.0;
+    private double grade = 0.0; // 绩点
+    private double point = 0.0; // 已修学分(除公选课）
+    private double pointTotal = 0.0; // 总学分（除公选课）
+    private double elective = 0.0; // 公选课学分
 
     public PointModel() {
     }

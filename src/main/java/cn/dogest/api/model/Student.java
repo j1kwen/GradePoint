@@ -1,19 +1,20 @@
 package cn.dogest.api.model;
 
 /**
+ * 学生模型
  * Created by xiaonan.jia on 2017/8/29.
  */
 public class Student {
 
-    private String id = null;
-    private String name = null;
-    private String gender = null;
-    private String grade = null;
-    private String college = null;
-    private String major = null;
-    private String cls = null;
-    private String level = null;
-    private String stm = null;
+    private String id = null; // 学号
+    private String name = null; // 姓名
+    private String gender = null; // 性别
+    private String grade = null; // 年级
+    private String college = null; // 学院
+    private String major = null; // 专业
+    private String cls = null; // 班级
+    private String level = null; // 层次（专科、本科、硕士、博士）
+    private String stm = null; // 学制
 
     public String getId() {
         return id;
@@ -87,6 +88,10 @@ public class Student {
         this.stm = stm;
     }
 
+    /**
+     * 检查学生信息是否完整
+     * @return
+     */
     public boolean checkOK() {
         if(id == null) {
             return false;

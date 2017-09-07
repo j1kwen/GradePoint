@@ -3,6 +3,7 @@ package cn.dogest.api.exception;
 import cn.dogest.api.model.StatusCode;
 
 /**
+ * 异常基类，包含错误信息以及状态码
  * Created by xiaonan.jia on 2017/9/4.
  */
 public class GradeBaseException extends Exception {
@@ -19,6 +20,10 @@ public class GradeBaseException extends Exception {
         this.statusCode = statusCode;
     }
 
+    /**
+     * 获取异常状态码
+     * @return 状态码
+     */
     public StatusCode getStatusCode() {
         return statusCode;
     }

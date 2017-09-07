@@ -4,6 +4,9 @@ import java.util.List;
 
 import cn.dogest.api.model.Student;
 
+/**
+ * 测试主类
+ */
 public class Main {
 
     public static void main(String[] args) throws Exception {
