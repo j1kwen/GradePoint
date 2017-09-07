@@ -13,9 +13,9 @@ public class Main {
         // TODO Auto-generated method stub
         HtmlConverter htmlConverter = new HtmlConverter(new NetworkProcesser("1411057200",""));
         List<Student> list = htmlConverter.getStudentList();
-		for(Student student : list) {
-			System.out.println(student.getName());
-		}
+        for(Student student : list) {
+            System.out.println(student.getName());
+        }
     }
 
 }

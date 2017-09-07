@@ -9,44 +9,44 @@ import java.net.URLConnection;
  */
 public class NetworkProcesser {
 
-	private String url = null; // 爬取的url
-	private String paramFormat = null; // 参数格式化字符串
-	private String param = null; // 格式化后的参数串
-	private int type = 0; // 爬虫类型值
-	public static final int TYPE_GRADE = 0; // 爬虫类型，成绩页
-	public static final int TYPE_INFO = 1; // 爬虫类型，学生信息页
+    private String url = null; // 爬取的url
+    private String paramFormat = null; // 参数格式化字符串
+    private String param = null; // 格式化后的参数串
+    private int type = 0; // 爬虫类型值
+    public static final int TYPE_GRADE = 0; // 爬虫类型，成绩页
+    public static final int TYPE_INFO = 1; // 爬虫类型，学生信息页
 
     /**
      * 构造一个总成绩查询页
      * @param id 准确学号
      */
-	public NetworkProcesser(String id) {
+    public NetworkProcesser(String id) {
         this.url = "http://210.44.176.116/cjcx/zcjcx_list.php";
         this.paramFormat = "post_xuehao=%s&Submit=提交";
         this.param = String.format(paramFormat, id);
         this.type = NetworkProcesser.TYPE_GRADE;
-	}
+    }
 
     /**
      * 构造一个学生学号查询页
      * @param id 学号，可模糊匹配
      * @param name 姓名，可模糊匹配
      */
-	public NetworkProcesser(String id, String name) {
-	    id = id != null ? id : "";
-	    name = name != null ? name : "";
+    public NetworkProcesser(String id, String name) {
+        id = id != null ? id : "";
+        name = name != null ? name : "";
         this.url = "http://210.44.176.116/cjcx/xhcx_list.php";
         this.paramFormat = "post_xingming=%s&post_xuehao=%s&Submit=提交";
         this.param = String.format(paramFormat, name, id);
         this.type = NetworkProcesser.TYPE_INFO;
     }
-	/**
-	 * 获取请求的html页面
+    /**
+     * 获取请求的html页面
      * @exception Exception 读写异常或网络异常
-	 * @return html文档字符串，utf-8编码
-	 */
-	public String getHtmlContent() throws Exception {
-	    // 构造URL
+     * @return html文档字符串，utf-8编码
+     */
+    public String getHtmlContent() throws Exception {
+        // 构造URL
         URL realUrl = new URL(url);
         // 打开和URL之间的连接
         URLConnection conn = realUrl.openConnection();
@@ -87,7 +87,7 @@ public class NetworkProcesser {
             ips.close();
         }
         return result;
-	}
+    }
 
     /**
      * 获取爬虫类型值
