@@ -3,6 +3,7 @@ package cn.dogest.api.service;
 import cn.dogest.api.exception.ConnectionException;
 import cn.dogest.api.exception.GradeBaseException;
 import cn.dogest.api.model.StatusCode;
+import cn.dogest.api.utils.BuildingMapper;
 import cn.dogest.api.utils.HttpRequest;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -43,7 +44,15 @@ public class EnergyService {
                 return result;
             }
             // 请求第一个接口，获取房间id与学生信息
-            String param = String.format(param1, URLEncoder.encode(room.replaceAll("h","#"), "UTF-8"), id);
+            String[] roomParas = BuildingMapper.getMappingParam(room);
+            if(roomParas == null) {
+                // 找不到房间的参数映射
+                result.put("message", "房间号有误，请检查后重试！");
+                result.put("status", "PARAM_ERR");
+                result.put("code", -1);
+                return result;
+            }
+            String param = String.format(param1, roomParas[0], id);
             String html = HttpRequest.sendGet(url1, param);
             JSONObject json = JSONObject.fromObject(html);
             // 如果房间号为NoRoom，说明房间号有误，若抛出异常，则参数格式错误
@@ -63,6 +72,8 @@ public class EnergyService {
             // 将第一个接口返回的个人信息数据添加到json2中
             json2.put("userId", json.get("userId"));
             json2.put("userName", json.get("userName"));
+            // 替换房间名称
+            json2.put("roomname", roomParas[1]);
 
             // 将数据放进返回值中
             result.put("data", json2);
