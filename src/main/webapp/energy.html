@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="favicon.ico" />
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>用电查询API</title>
+    <style>
+        .btn-return-top {
+            position: fixed;
+            bottom: 10%;
+            right: 2.5%;
+            z-index: 999;
+            width: 50px;
+            height: 50px;
+            opacity: 0.4;
+            text-align:center;
+            padding:18px;
+            border: 0px;
+            border-radius: 6px;
+            background-color: #eee;
+        }
+        .btn-return-top>.glyphicon {
+            top: -1px;
+        }
+        .btn-return-top:hover {
+            opacity: 0.8;
+        }
+        .dn{display: none;}
+    </style>
+</head>
+<body style="padding-top: 70px;">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#api-header"><span class="glyphicon glyphicon-flash"></span> 用电API</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" id="nav-link-list">
+                <li><a href="#api-use">接口调用</span></a></li>
+                <li><a href="#api-return">返回值</a></li>
+                <li><a href="#api-token-apply">token申请</a></li>
+                <li><a href="#api-return-success">调用成功</a></li>
+                <li><a href="#api-return-fail">调用失败</a></li>
+                <li><a href="#api-remark">说明</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="btn btn-return-top dn" title="返回顶部"><span class="glyphicon glyphicon-chevron-up"></span></div>
+<div class="container">
+    <div class="jumbotron" id="api-header">
+        <h2><span class="glyphicon glyphicon-flash"></span> 用电查询API</h2>
+        <p>山东理工大学宿舍用电查询接口文档</p>
+    </div>
+    <div id="api-use" class="page-header">
+        <h2>接口调用</h2>
+    </div>
+    <h3>地址</h3>
+    <pre>http://api.dogest.cn/grade/energy/query</pre>
+    <h3>请求类型</h3>
+    <p><strong>*可以使用ajax跨域请求数据，已设置头部<code>Access-Control-Allow-Origin: *</code></strong></p>
+    <pre>HTTP GET</pre>
+    <h3>参数</h3>
+    <p><strong>所有参数均为必需字段。</strong></p>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-1">
+                <col class="col-xs-9">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>参数</th>
+                <th>类型</th>
+                <th>含义</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>id</code></td>
+                <td><code>String</code></td>
+                <td>学生学号</td>
+            </tr>
+            <tr>
+                <td><code>room</code></td>
+                <td><code>String</code></td>
+                <td>寝室号，楼号+门牌号格式（如6h101，不区分大小写），宿舍楼映射见下表</td>
+            </tr>
+            <tr>
+                <td><code>token</code></td>
+                <td><code>String</code></td>
+                <td>接口调用的token（暂不启用token权限验证）</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3>宿舍楼表</h3>
+    <p><strong>西校区，格式符<code>{%d}</code>代表楼号值</strong></p>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-2">
+                <col class="col-xs-1">
+                <col class="col-xs-9">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>宿舍楼</th>
+                <th>参数值</th>
+                <th>示例</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1~4, 13号公寓南楼</td>
+                <td><code>{%d}nh</code></td>
+                <td>1号公寓南楼101 <code>1nh101</code></td>
+            </tr>
+            <tr>
+                <td>1~4, 13号公寓北楼</td>
+                <td><code>{%d}bh</code></td>
+                <td>2号公寓北楼202 <code>2bh202</code></td>
+            </tr>
+            <tr>
+                <td>5~12, 14~22号公寓</td>
+                <td><code>{%d}h</code></td>
+                <td>6号公寓429 <code>6h429</code></td>
+            </tr>
+            <tr>
+                <td>研究生公寓南楼</td>
+                <td><code>y1h</code></td>
+                <td>研究生公寓南楼101 <code>y1h101</code></td>
+            </tr>
+            <tr>
+                <td>研究生公寓北楼 </td>
+                <td><code>y2h</code></td>
+                <td>研究生公寓北楼229 <code>y2h229</code></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><strong>东校区，格式符<code>{%d}</code>代表楼号值</strong></p>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-2">
+                <col class="col-xs-1">
+                <col class="col-xs-9">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>宿舍楼</th>
+                <th>参数值</th>
+                <th>示例</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1~2,4,6,8~10号公寓</td>
+                <td><code>d{%d}h</code></td>
+                <td>东区8号公寓101 <code>d8h101</code></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3>请求示例</h3>
+    <p>注：接口测试阶段不启用token验证，请求字段<code>token</code>可以不填，示例如下</p>
+    <pre>http://api.dogest.cn/grade/energy/query?id=141105xxxxx&room=6h429&token=bfc925b542a531a9728cc54248322695</pre>
+    <pre>http://api.dogest.cn/grade/energy/query?id=141105xxxxx&room=6h429</pre>
+    <p>如果使用JQuery的ajax请求数据，由于服务器已经设置好了接受跨域请求，所以可以直接请求到json而不必使用jsonp，示例如下：</p>
+    <pre>
+$.ajax({
+    type: "get",
+    url: "http://api.dogest.cn/grade/energy/query?id=141105xxxxx&room=6h429",
+    success: function(data) {
+        // 请求成功，返回data对象
+        if(data.code == 0) {
+            // 查询成功要做的事情
+        } else {
+            // 查询失败要做的事情，错误信息包含在data.message中
+        }
+    },
+    error: function() {
+        // 请求失败要做的事情
+    }
+});</pre>
+    <div id="api-return" class="page-header">
+        <h2>返回值</h2>
+    </div>
+    <p>接口返回值为json字符串，编码为<code>UTF-8</code>。</p>
+    <h3>基本字段</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-1">
+                <col class="col-xs-10">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>字段</th>
+                <th>类型</th>
+                <th>含义</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><code>code</code></td>
+                <td><code>Integer</code></td>
+                <td>返回的状态码</td>
+            </tr>
+            <tr>
+                <td><code>status</code></td>
+                <td><code>String</code></td>
+                <td>返回的状态值</td>
+            </tr>
+            <tr>
+                <td><code>message</code></td>
+                <td><code>String</code></td>
+                <td>接口回传的消息</td>
+            </tr>
+            <tr>
+                <td><code>data</code></td>
+                <td><code>Object</code></td>
+                <td>返回的数据（Data），只有调用成功才有此字段</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3>状态码/值</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-2">
+                <col class="col-xs-9">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>code值</th>
+                <th>status值</th>
+                <th>含义</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>0</code></td>
+                    <td><code>OK</code></td>
+                    <td>查询成功</td>
+                </tr>
+                <tr>
+                    <td><code>-1</code></td>
+                    <td><code>PARAM_ERR</code></td>
+                    <td>请求参数错误</td>
+                </tr>
+                <tr>
+                    <td><code>-2</code></td>
+                    <td><code>SRV_ERR</code></td>
+                    <td>服务器内部出错</td>
+                </tr>
+                <tr>
+                    <td><code>-3</code></td>
+                    <td><code>ROOM_ERR</code></td>
+                    <td>房间号有误或不存在</td>
+                </tr>
+                <tr>
+                    <td><code>2</code></td>
+                    <td><code>CONNECT_ERR</code></td>
+                    <td>连接原始服务器失败</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="api-token-apply" class="page-header">
+        <h2>token申请</h2>
+    </div>
+    <h3><del>申请地址</del></h3>
+    <pre><a href="http://api.dogest.cn/grade/token/apply"><del>http://api.dogest.cn/grade/token/apply</del></a></pre>
+    <p><strong>注：测试阶段接口调用不进行token验证，不开放token申请。</strong></p>
+    <div id="api-return-success" class="page-header">
+        <h2>调用成功</h2>
+    </div>
+    <p>接口参数正确且接口服务器与目标服务器均正常工作时，将返回调用成功的数据，返回内容除了上述基本字段外还将增加数据（<code>data</code>）字段，包含所查寝室的各项用电信息，详情如下：</p>
+    <h3>返回值示例</h3>
+            <pre>
+{
+    code: 0,
+    data: {
+        roomid: 1060816,
+        roomname: "6号公寓101",
+        midmachineid: "10608",
+        midmachineport: 16,
+        lastreading: 163.82,
+        datatime: "2017-09-11 17:34:22",
+        isneedresult: -64,
+        weekaverage: 0.37,
+        monthaverage: 0.92,
+        overloadblackout: 0,
+        ilegalblackout: 0,
+        blackout: 0,
+        userId: "14110572003",
+        userName: "贾晓楠"
+    },
+    message: "success",
+    status: "OK"
+}</pre>
+    <h3>主要字段类型及含义</h3>
+    <p>各字段的类型与含义如下表：</p>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-1">
+                <col class="col-xs-10">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>字段</th>
+                    <th>类型</th>
+                    <th>含义</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>roomid</code></td>
+                    <td><code>String</code></td>
+                    <td>房间唯一标识id</td>
+                </tr>
+                <tr>
+                    <td><code>roomname</code></td>
+                    <td><code>String</code></td>
+                    <td>房间名</td>
+                </tr>
+                <tr>
+                    <td><code>lastreading</code></td>
+                    <td><code>Float</code></td>
+                    <td>剩余电量（kWh）</td>
+                </tr>
+                <tr>
+                    <td><code>datatime</code></td>
+                    <td><code>String</code></td>
+                    <td>更新时间</td>
+                </tr>
+                <tr>
+                    <td><code>weekaverage</code></td>
+                    <td><code>Float</code></td>
+                    <td>均值下限（可求预计使用天数下限）</td>
+                </tr>
+                <tr>
+                    <td><code>monthaverage</code></td>
+                    <td><code>Float</code></td>
+                    <td>均值上限（可求预计使用天数上限）</td>
+                </tr>
+                <tr>
+                    <td><code>userId</code></td>
+                    <td><code>String</code></td>
+                    <td>学生学号</td>
+                </tr>
+                <tr>
+                    <td><code>userName</code></td>
+                    <td><code>String</code></td>
+                    <td>学生姓名</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="api-return-fail" class="page-header">
+        <h2>调用失败</h2>
+    </div>
+    <h3>参数错误：PARAM_ERR</h3>
+    <p>由于缺少必要参数或者参数错误而被拒绝访问，示例如下：</p>
+    <pre>
+{
+    code: -1,
+    message: "参数[id]和[room]均为必需！",
+    status: "PARAM_ERR"
+}
+    </pre>
+    <h3>服务器错误：SRV_ERR</h3>
+    <p>服务器内部在运行时发生了不可预期的异常，示例如下：</p>
+    <pre>
+{
+    code: -2,
+    message: "服务器内部异常，请稍后重试！",
+    status: "SRV_ERR"
+}
+    </pre>
+    <h3>房间号错误：ROOM_ERR</h3>
+    <p>由于输入了错误非法的房间号导致无法获取房间标识号，示例如下：</p>
+    <pre>
+{
+    code: -3,
+    message: "房间号有误，没有该房间！",
+    status: "ROOM_ERR"
+}
+    </pre>
+    <h3>连接错误：CONNECT_ERR</h3>
+    <p>无法连接到原始服务器，可能是原始目标服务器出现了异常（并非接口服务器的问题），或输入了错误的学号，返回值示例：</p>
+    <pre>
+{
+    code: 2,
+    message: "网络异常，无法读取或写入数据！",
+    status: "CONNECT_ERR"
+}
+    </pre>
+    <div id="api-remark" class="page-header">
+        <h2>说明</h2>
+    </div>
+    <p>1. 接口测试阶段不进行token验证，所有人均可以无限次数地调用此接口。</p>
+    <p>2. 本着共享的原则请勿恶意占用服务器资源，如发现恶意行为将会使ip被列入黑名单！</p>
+    <p>3. 请接口使用者在自己应用中的合适位置附上该wiki页面的<a href="http://api.dogest.cn/grade/energy.html" target="_blank">链接</a>，正式发布后将会根据情况开放源码。</p>
+    <p>4. 如需跟踪接口的更新动态（如bug修复、机制更新、token开启等），请<a href="mailto:763461297@qq.com?subject=【用电查询API】我要跟踪动态&body=<p>【请填写以下基本信息，如需多个邮箱请使用英文分号<code>;</code>间隔】</p><p>姓名：</p><p>邮箱：</p><p>手机号：</p>">点击此处</a>发送邮件，有任何动态将会及时邮件提醒您。</p>
+    <p>5. 如发现接口的任何问题请点击下方的Copyright邮件反馈！感谢！</p>
+</div>
+<hr/>
+<footer class="footer" style="margin: 40px 20px;">
+    <div class="container">
+        <div class="text-center">
+            Copyright © 2016-2017
+            <strong><a href="mailto:763461297@qq.com?subject=【用电查询API】接口问题反馈">Shannon</a></strong>&nbsp;
+            All Rights Reserved.
+        </div>
+        <div class="text-center">
+            Icon source by <a href="http://glyphicons.com/" target="_blank">Glyphicons</a>.
+            &nbsp;京ICP备17047375号-1
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+    $(function() {
+        $("#nav-link-list a, .navbar-header a").click(function() {
+            $("html, body").animate({
+                scrollTop: $($(this).attr("href")).offset().top - 70 + "px"
+            }, 500);
+            return false;
+        });
+        $(window).on('scroll',function(){
+            var st = $(document).scrollTop();
+            if(st > 0){
+                $('.btn-return-top').fadeIn(function(){
+                    $(this).removeClass('dn');
+                });
+            }else{
+                $('.btn-return-top').fadeOut(function(){
+                    $(this).addClass('dn');
+                });
+            }
+        });
+        $(".btn-return-top").click(function () {
+            var speed=300;//滑动的速度
+            $('body,html').animate({ scrollTop: 0 }, speed);
+            return false;
+        });
+    });
+
+</script>
+</body>
+</html>
+    
