@@ -9,6 +9,15 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/error/404-err.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/error/500-err.jsp</location>
+  </error-page>
+
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -45,9 +54,9 @@
   <servlet-mapping >
     <servlet-name >default </servlet-name >
     <url-pattern>*.html</url-pattern>
-  </servlet-mapping >
-  <servlet-mapping >
-    <servlet-name >default </servlet-name >
     <url-pattern>*.ico</url-pattern>
+    <url-pattern>*.jpg</url-pattern>
+    <url-pattern>*.gif</url-pattern>
+    <url-pattern>*.png</url-pattern>
   </servlet-mapping >
 </web-app>
