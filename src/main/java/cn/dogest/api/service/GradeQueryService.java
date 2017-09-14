@@ -121,7 +121,7 @@ public class GradeQueryService {
             int fIndex = (page - 1) * size;
             int eIndex = Math.min(fIndex + size, list.size());
 
-            if(fIndex >= list.size()) {
+            if(fIndex > list.size()) {
                 // 请求的起始索引超过总条目数
                 result.put("message", "请求的部分数据超出了数据总长度！请检查[page]和[size]的大小！");
                 result.put("status", "PARAM_ERR");
