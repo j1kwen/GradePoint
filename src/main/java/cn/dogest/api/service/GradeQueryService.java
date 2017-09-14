@@ -9,6 +9,8 @@ import cn.dogest.api.utils.HtmlConverter;
 import cn.dogest.api.utils.NetworkProcesser;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,6 +113,11 @@ public class GradeQueryService {
                 result.put("status", "PARAM_ERR");
                 result.put("code", -1);
                 return result;
+            }
+            try {
+                name = URLEncoder.encode(name, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                // nothing
             }
             // 爬取html构造Converter
             HtmlConverter htmlConverter = new HtmlConverter(new NetworkProcesser(id, name));

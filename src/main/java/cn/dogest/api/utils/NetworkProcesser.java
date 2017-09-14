@@ -3,6 +3,7 @@ package cn.dogest.api.utils;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 
 /**
  * 爬虫，爬取指定页面的html文档内容
@@ -54,7 +55,9 @@ public class NetworkProcesser {
         conn.setRequestProperty("accept", "*/*");
         conn.setRequestProperty("connection", "Keep-Alive");
         conn.setRequestProperty("user-agent",
-                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+                "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36");
+        conn.setRequestProperty("Accept-Charset", "utf-8");
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
         // 发送POST必须的设置
         conn.setDoOutput(true);
         conn.setDoInput(true);
