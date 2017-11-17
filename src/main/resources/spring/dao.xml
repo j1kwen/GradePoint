@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+
+    <bean id="abstractPoolDataSource" abstract="true" class="org.apache.tomcat.jdbc.pool.DataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="fairQueue" value="false"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="1"/>
+        <property name="maxIdle" value="1"/>
+        <property name="maxWait" value="5000"/>
+        <property name="minIdle" value="1"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="30"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="validationQuery" value="select 1"/>
+        <property name="validationInterval" value="500000"/>
+    </bean>
+    <bean id="apiDataSource" parent="abstractPoolDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${jdbc.apidb.url}"/>
+        <property name="username" value="${jdbc.apidb.username}"/>
+        <property name="password" value="${jdbc.apidb.password}"/>
+    </bean>
+
+    <bean id="apiSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="apiDataSource"/>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+        <property name="mapperLocations" value="classpath*:./mybatis/*"/>
+    </bean>
+
+    <bean id="mapperScannerConfigurerSchedule" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="apiSqlSessionFactory" />
+        <property name="basePackage" value="cn.dogest.api.dao"/>
+    </bean>
+
+    <bean id="apiTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="apiDataSource" />
+    </bean>
+
+    <tx:annotation-driven   transaction-manager="apiTransactionManager" />
+
+</beans>
