@@ -3,10 +3,13 @@ package cn.dogest.api.service;
 import cn.dogest.api.exception.ConnectionException;
 import cn.dogest.api.exception.GradeBaseException;
 import cn.dogest.api.model.StatusCode;
+import cn.dogest.api.service.inter.IServiceMonitor;
 import cn.dogest.api.utils.BuildingMapper;
 import cn.dogest.api.utils.HttpRequest;
+import cn.dogest.api.utils.Pair;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -20,7 +23,7 @@ import java.util.Map;
  * Created by xiaonan.jia on 2017/9/8.
  */
 @Service
-public class EnergyService {
+public class EnergyService implements IServiceMonitor {
 
     private static final String url1 = "http://lgny.sdut.edu.cn/matrixlambdasupport/lightingbinding.grace";
     private static final String url2 = "http://lgny.sdut.edu.cn/matrixlambdasupport/lightingshow.grace";
@@ -96,5 +99,23 @@ public class EnergyService {
         }
 
         return result;
+    }
+
+    @Override
+    public Pair<Integer, String> getStatus() {
+        String commonId = "14110572003";
+        String testRoom = "6h429";
+        Map<String, Object> ret = this.getEnergy(testRoom, commonId);
+        return new Pair<>(Integer.parseInt(ret.get("code").toString()), ret.get("status").toString());
+    }
+
+    @Override
+    public String getInterfaceName() {
+        return "Energy";
+    }
+
+    @Override
+    public String getCName() {
+        return "用电查询";
     }
 }

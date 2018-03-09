@@ -4,9 +4,12 @@ import cn.dogest.api.exception.*;
 import cn.dogest.api.model.ResultModel;
 import cn.dogest.api.model.StatusCode;
 import cn.dogest.api.model.Student;
+import cn.dogest.api.service.inter.IServiceMonitor;
 import cn.dogest.api.utils.GradeCalculator;
 import cn.dogest.api.utils.HtmlConverter;
 import cn.dogest.api.utils.NetworkProcesser;
+import cn.dogest.api.utils.Pair;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -20,7 +23,7 @@ import java.util.Map;
  * Created by xiaonan.jia on 2017/8/29.
  */
 @Service
-public class GradeQueryService {
+public class GradeQueryService implements IServiceMonitor {
 
     /**
      * 获取绩点及成绩信息
@@ -161,5 +164,22 @@ public class GradeQueryService {
             result.put("code", -1);
         }
         return result;
+    }
+
+    @Override
+    public Pair<Integer, String> getStatus() {
+        String commonId = "14110572003";
+        Map<String, Object> ret = this.getGradePoint(commonId);
+        return new Pair<>(Integer.parseInt(ret.get("code").toString()), ret.get("status").toString());
+    }
+
+    @Override
+    public String getInterfaceName() {
+        return "Grade";
+    }
+
+    @Override
+    public String getCName() {
+        return "绩点查询";
     }
 }

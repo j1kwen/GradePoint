@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.dogest.api.dao.AppInfoMapper">
+
+    <sql id="BaseColumnList">
+        id, code, name, appid, appkey, phone
+    </sql>
+
+    <select id="getAppInfo" resultType="cn.dogest.api.model.AppInfo" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumnList"/>
+        from app_info
+        where code=#{code}
+    </select>
+
+</mapper>

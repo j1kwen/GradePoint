@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.dogest.api.dao.InterfaceStatusMapper">
+
+    <resultMap id="BaseResultMap" type="cn.dogest.api.model.InterfaceStatus">
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        name, code, status, last_update
+    </sql>
+
+    <select id="getLastStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumnList"/>
+        from interface_status
+        where name=#{inter}
+        ORDER BY id DESC limit 1
+    </select>
+
+    <update id="updateInterfaceStatus" parameterType="cn.dogest.api.model.InterfaceStatus">
+        INSERT INTO interface_status
+        (<include refid="BaseColumnList"/>)
+        VALUES
+        (#{name}, #{code}, #{status}, #{lastUpdate})
+    </update>
+
+</mapper>

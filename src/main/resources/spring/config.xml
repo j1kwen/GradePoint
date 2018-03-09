@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/task/spring-task-3.2.xsd ">
 
     <context:property-placeholder location="classpath:system.properties" ignore-unresolvable="true"/>
-    <context:component-scan base-package="cn.dogest.api.schedule.*"/>
+    <context:component-scan base-package="cn.dogest.api.*"/>
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
@@ -25,5 +25,8 @@
         <property name="properties" ref="configProperties"/>
     </bean>
 
+    <task:executor id="executor" pool-size="5" />
+    <task:scheduler id="scheduler" pool-size="10" />
+    <task:annotation-driven executor="executor" scheduler="scheduler" />
 
 </beans>

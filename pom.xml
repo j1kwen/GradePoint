@@ -12,6 +12,33 @@
     <org.springframework.version>4.3.1.RELEASE</org.springframework.version>
   </properties>
   <dependencies>
+    <!--SMS-->
+    <dependency>
+      <groupId>com.github.qcloudsms</groupId>
+      <artifactId>sms</artifactId>
+      <version>0.9.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20160810</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>4.4.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+
     <!--日志包-->
     <dependency>
       <groupId>junit</groupId>

@@ -25,7 +25,7 @@ public class Energy {
 
     /**
      * 获取指定寝室的能源信息
-     * @param room 寝室号x#xxx
+     * @param room 寝室号xhxxx
      * @param id 学号
      * @return
      */
