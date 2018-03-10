@@ -27,8 +27,8 @@ public class EnergyService implements IServiceMonitor {
 
     // private static final String url1 = "http://lgny.sdut.edu.cn/matrixlambdasupport/lightingbinding.grace";
     // private static final String url2 = "http://lgny.sdut.edu.cn/matrixlambdasupport/lightingshow.grace";
-    private static final String url1 = "http://211.64.28.125/lightingbinding.grace";
-    private static final String url2 = "http://211.64.28.125/lightingshow.grace";
+    private static final String url1 = "http://210.44.176.27:8000/lightingbinding.grace";
+    private static final String url2 = "http://210.44.176.27:8000/lightingshow.grace";
     private static final String param1 = "arg0=%s&arg1=%s";
     private static final String param2 = "arg=%s";
 
