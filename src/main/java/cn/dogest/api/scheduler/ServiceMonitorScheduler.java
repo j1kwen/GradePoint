@@ -23,7 +23,7 @@ public class ServiceMonitorScheduler {
     @Resource
     InterfaceStatusMapper interfaceStatusMapper;
 
-    @Scheduled(cron = "0 0 */1 * * ?")
+    // @Scheduled(cron = "0 0 */1 * * ?")
     public void run() {
         List<Object> list = ServiceMonitorFactory.getServiceMonitors();
         for(Object obj : list) {
