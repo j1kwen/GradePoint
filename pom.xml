@@ -10,8 +10,6 @@
   <properties>
     <maven_deploy_skip>true</maven_deploy_skip>
     <org.springframework.version>4.3.1.RELEASE</org.springframework.version>
-	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
   </properties>
   <dependencies>
     <!--SMS-->
@@ -216,7 +214,6 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
-		  <encoding>uft8</encoding>
         </configuration>
       </plugin>
     </plugins>
