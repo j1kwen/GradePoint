@@ -12,6 +12,12 @@
     <org.springframework.version>4.3.1.RELEASE</org.springframework.version>
   </properties>
   <dependencies>
+    <!-- Mail -->
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4.4</version>
+    </dependency>
     <!--SMS-->
     <dependency>
       <groupId>com.github.qcloudsms</groupId>

@@ -3,7 +3,7 @@
 <mapper namespace="cn.dogest.api.dao.AppInfoMapper">
 
     <sql id="BaseColumnList">
-        id, code, name, appid, appkey, phone
+        id, code, name, appid, appkey, phone, mail_conf AS mailConf, extra
     </sql>
 
     <select id="getAppInfo" resultType="cn.dogest.api.model.AppInfo" parameterType="java.lang.String">
