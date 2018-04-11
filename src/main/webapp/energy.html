@@ -13,7 +13,7 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <title>用电查询API</title>
+    <title>用电查询API（已停止使用）</title>
     <style>
         .btn-return-top {
             position: fixed;
@@ -75,14 +75,19 @@
 <div class="btn btn-return-top dn" title="返回顶部"><span class="glyphicon glyphicon-chevron-up"></span></div>
 <div class="container">
     <div class="jumbotron" id="api-header">
-        <h2><span class="glyphicon glyphicon-flash"></span> 用电查询API</h2>
-        <p>山东理工大学宿舍用电查询接口文档</p>
+        <h2><span class="glyphicon glyphicon-flash"></span> 用电查询API（已弃用）</h2>
+        <p><del>山东理工大学宿舍用电查询接口文档</del></p>
     </div>
+    <div id="api-disabled" class="page-header">
+        <h2>接口弃用说明</h2>
+    </div>
+    <h3>声明：</h3>
+    <pre>由于能源管理中心原始接口未授权我们使用数据，故该接口自即日起停止使用，大概不会再开放了，如有其他情况恕不另行通知，请自行关注。</pre>
     <div id="api-use" class="page-header">
         <h2>接口调用</h2>
     </div>
     <h3>地址</h3>
-    <pre>http://api.dogest.cn/grade/energy/query</pre>
+    <pre><del>http://api.dogest.cn/grade/energy/query</del></pre>
     <h3>请求类型</h3>
     <p><strong>*可以使用ajax跨域请求数据，已设置头部<code>Access-Control-Allow-Origin: *</code></strong></p>
     <pre>HTTP GET</pre>

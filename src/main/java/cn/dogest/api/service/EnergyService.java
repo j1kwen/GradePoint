@@ -25,12 +25,11 @@ import java.util.Map;
 @Service
 public class EnergyService implements IServiceMonitor {
 
-    // private static final String url1 = "http://lgny.sdut.edu.cn/matrixlambdasupport/lightingbinding.grace";
-    // private static final String url2 = "http://lgny.sdut.edu.cn/matrixlambdasupport/lightingshow.grace";
     private static final String url1 = "http://210.44.176.27:8000/lightingbinding.grace";
     private static final String url2 = "http://210.44.176.27:8000/lightingshow.grace";
     private static final String param1 = "arg0=%s&arg1=%s";
     private static final String param2 = "arg=%s";
+    private static final Boolean IF_ENABLE = false;
 
     /**
      * 获取能源信息
@@ -41,6 +40,12 @@ public class EnergyService implements IServiceMonitor {
     public Map<String, Object> getEnergy(String room, String id) {
         Map<String, Object> result = new HashMap<>();
         try {
+            if(!IF_ENABLE) {
+                result.put("message", "接口服务已停止使用");
+                result.put("status", "IF_SRV_DISABLED");
+                result.put("code", 0xffff);
+                return result;
+            }
             if((id == null || id.trim().equals("")) || (room == null || room.trim().equals(""))) {
                 // 参数不可为空
                 result.put("message", "参数[id]和[room]均为必需！");
