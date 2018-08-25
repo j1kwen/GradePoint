@@ -1,5 +1,6 @@
 package cn.dogest.api.utils;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import cn.dogest.api.exception.CalculateException;
@@ -62,11 +63,11 @@ public class GradeCalculator {
      * @throws CalculateException
      */
     private PointModel calcPoint(List<Course> list) throws CalculateException {
-        double sumPoint = 0.0; // 除公选课外的总学分
-        double sumProduct = 0.0; // 除公选课外的总学分绩点 SUM(学分*成绩)
+        BigDecimal sumPoint = BigDecimal.ZERO; // 除公选课外的总学分
+        BigDecimal sumProduct = BigDecimal.ZERO; // 除公选课外的总学分绩点 SUM(学分*成绩)
 
-        double c_point = 0.0; // 已修学分，不包括公选课
-        double elective = 0.0; // 已修公选课学分
+        BigDecimal c_point = BigDecimal.ZERO; // 已修学分，不包括公选课
+        BigDecimal elective = BigDecimal.ZERO; // 已修公选课学分
 
         // Collections.reverse(list); // 逆置 为了从后往前遍历，有重修的取最后一次（已废弃）
         List<Course> set = new ArrayList<>(); // 待计算绩点的课程列表（重修课程去重后）
@@ -91,12 +92,12 @@ public class GradeCalculator {
             for(Course course : set) {
                 // System.out.println(String.format("待计算课程：%s => %s / %s", course.getName(), course.getOrigGrade(), course.getReGrade()));
                 // 计算课程的学分绩点（学分*成绩），0则不合格
-                double tmp = course.getProductValue();
+                BigDecimal tmp = course.getProductValue();
                 if(course.getCourseType() == CourseType.ELECTIVE) {
                     // 如果是公选课，不计入绩点，仅需要根据及格与否计算公选课学分
-                    if(tmp > 0.0) {
+                    if(tmp.compareTo(BigDecimal.ZERO) > 0) {
                         // 公选课合格，学分计入公选课学分
-                        elective += course.getPointValue(); // 计入公选课学分
+                        elective = elective.add(course.getPointValue()); // 计入公选课学分
                     } else {
                         // 公选课不合格无影响
                         // System.out.println(String.format("不合格的公选课：%s => %s / %s", course.getName(), course.getOrigGrade(), course.getReGrade()));
@@ -104,17 +105,19 @@ public class GradeCalculator {
                 } else {
                     // 如果是必修或实践环节，需要计算绩点
                     // 计算分母 - 总学分
-                    sumPoint += course.getPointValue();
+                    sumPoint = sumPoint.add(course.getPointValue());
                     // 计算分子 - 学分绩点和
-                    sumProduct += tmp;
-                    if(tmp > 0) {
+                    sumProduct = sumProduct.add(tmp);
+                    if(tmp.compareTo(BigDecimal.ZERO) > 0) {
                         // 必修合格，计入已修学分
-                        c_point += course.getPointValue(); // 计入已修学分
+                        c_point = c_point.add(course.getPointValue()); // 计入已修学分
                     }
                 }
             }
             // 计算，绩点 = 除公选课所有课程的总学分绩点 / 除公选课所有课程的总学分
-            double c_grade = sumPoint == 0 ? 0 : sumProduct / sumPoint; // 分母为0说明课程为空，要单独判断
+            BigDecimal c_grade = sumPoint.compareTo(BigDecimal.ZERO) == 0
+                    ? BigDecimal.ZERO
+                    : sumProduct.divide(sumPoint, 14, BigDecimal.ROUND_UP); // 分母为0说明课程为空，要单独判断
             return new PointModel(c_grade, c_point, sumPoint, elective); // 构造成绩模型并返回
         } catch (Exception e) {
             throw new CalculateException("计算过程发生错误！请稍后重试！", e);
@@ -125,7 +128,7 @@ public class GradeCalculator {
      * 获取主修专业已修公选课学分
      * @return
      */
-    public double getMajorElective() {
+    public BigDecimal getMajorElective() {
         return major.getElective();
     }
 
@@ -133,49 +136,49 @@ public class GradeCalculator {
      * 获取辅修专业已修公选课学分
      * @return
      */
-    public double getMinorElective() {
+    public BigDecimal getMinorElective() {
         return minor.getElective();
     }
     /**
      * 获取主修专业绩点
      * @return
      */
-    public double getMajorGradePoint() {
+    public BigDecimal getMajorGradePoint() {
         return major.getGrade();
     }
     /**
      * 获取辅修专业绩点
      * @return
      */
-    public double getMinorGradePoint() {
+    public BigDecimal getMinorGradePoint() {
         return minor.getGrade();
     }
     /**
      * 获取主修专业已修学分
      * @return
      */
-    public double getMajorPointPassed() {
+    public BigDecimal getMajorPointPassed() {
         return major.getPoint();
     }
     /**
      * 获取主修专业总学分
      * @return
      */
-    public double getMajorPointTotal() {
+    public BigDecimal getMajorPointTotal() {
         return major.getPointTotal();
     }
     /**
      * 获取辅修专业已修学分
      * @return
      */
-    public double getMinorPointPassed() {
+    public BigDecimal getMinorPointPassed() {
         return minor.getPoint();
     }
     /**
      * 获取辅修专业总学分
      * @return
      */
-    public double getMinorPointTotal() {
+    public BigDecimal getMinorPointTotal() {
         return minor.getPointTotal();
     }
     /**

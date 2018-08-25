@@ -1,5 +1,6 @@
 package cn.dogest.api.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -8,13 +9,13 @@ import java.util.List;
  */
 public class ResultModel {
 
-    private double grade; // 绩点
-    private double point; // 已修学分
-    private double totalPoint; // 总学分
-    private double elective; // 已修公选课学分
+    private BigDecimal grade; // 绩点
+    private BigDecimal point; // 已修学分
+    private BigDecimal totalPoint; // 总学分
+    private BigDecimal elective; // 已修公选课学分
     private List<Course> list;  // 课程信息及成绩列表
 
-    public ResultModel(double grade, double point, double totalPoint, double elective, List<Course> list) {
+    public ResultModel(BigDecimal grade, BigDecimal point, BigDecimal totalPoint, BigDecimal elective, List<Course> list) {
         this.grade = grade;
         this.point = point;
         this.totalPoint = totalPoint;
@@ -22,15 +23,15 @@ public class ResultModel {
         this.list = list;
     }
 
-    public double getGrade() {
+    public BigDecimal getGrade() {
         return grade;
     }
 
-    public double getPoint() {
+    public BigDecimal getPoint() {
         return point;
     }
 
-    public double getTotalPoint() {
+    public BigDecimal getTotalPoint() {
         return totalPoint;
     }
 
@@ -38,7 +39,7 @@ public class ResultModel {
         return list;
     }
 
-    public double getElective() {
+    public BigDecimal getElective() {
         return elective;
     }
 }

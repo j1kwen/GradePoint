@@ -2,6 +2,8 @@ package cn.dogest.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.math.BigDecimal;
+
 public class Course {
 	
     private String term; // 学期
@@ -83,35 +85,35 @@ public class Course {
      * @param gd
      * @return
      */
-    private double getGradeFromString(String gd) {
+    private BigDecimal getGradeFromString(String gd) {
         try {
-            return Float.parseFloat(gd);
+            return new BigDecimal(gd);
         } catch (Exception e) {
             // 转换发生异常，说明成绩为文字，即等级制分数
             if(gd.equals("优秀") || gd.equals("优")) {
-                return 95.0;
+                return new BigDecimal("95.0");
             } else if(gd.equals("良好") || gd.equals("良")) {
-                return 84.0;
+                return new BigDecimal("84.0");
             } else if(gd.equals("中等") || gd.equals("中")) {
-                return 73.0;
+                return new BigDecimal("73.0");
             } else if(gd.equals("及格")) {
-                return 62.0;
+                return new BigDecimal("62.0");
             } else if(gd.equals("不及格")) {
-                return 0.0;
+                return BigDecimal.ZERO;
             } else if(gd.equals("合格")) {
-                return 70.0;
+                return new BigDecimal("70.0");
             } else if(gd.equals("不合格")) {
-                return 0.0;
+                return BigDecimal.ZERO;
             } else if(gd.equals("免修")) {
-                return 73.0;
+                return new BigDecimal("73.0");
             }
             // 其余情况均为不合格，即0分
-            return 0.0;
+            return BigDecimal.ZERO;
         }
     }
 
     @JsonIgnore
-    public double getPointValue() {
+    public BigDecimal getPointValue() {
         return getGradeFromString(this.point);
     }
 
@@ -120,7 +122,7 @@ public class Course {
      * @return 成绩分值
      */
     @JsonIgnore
-    public double getGradeValue() {
+    public BigDecimal getGradeValue() {
         if(!this.reGrade.trim().equals("")) {
             // 有重考成绩
             return getGradeFromString(reGrade);
@@ -134,12 +136,12 @@ public class Course {
      * @return 学分绩点值
      */
     @JsonIgnore
-    public double getProductValue() {
-        double grade = getGradeValue();
-        if(grade < 60.0) {
-            grade = 0.0;
+    public BigDecimal getProductValue() {
+        BigDecimal grade = getGradeValue();
+        if(grade.compareTo(new BigDecimal("60")) < 0) {
+            grade = BigDecimal.ZERO;
         }
-        return getPointValue() * grade;
+        return getPointValue().multiply(grade);
     }
 
     /**
@@ -159,7 +161,7 @@ public class Course {
      * @return 成绩较高者
      */
     public Course getReplacedCourse(Course course) {
-        if(this.getGradeValue() <= course.getGradeValue()) {
+        if(this.getGradeValue().compareTo(course.getGradeValue()) <= 0) {
             //System.out.println("重修成绩较高，取重修成绩。");
             return course;
         }
