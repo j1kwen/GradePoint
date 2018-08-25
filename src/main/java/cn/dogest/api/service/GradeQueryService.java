@@ -53,6 +53,7 @@ public class GradeQueryService implements IServiceMonitor {
             ResultModel major = new ResultModel(
                     calculator.getMajorGradePoint(),
                     calculator.getMajorPointPassed(),
+                    calculator.getMajorGradeTotal(),
                     calculator.getMajorPointTotal(),
                     calculator.getMajorElective(),
                     calculator.getMajorCourses()
@@ -61,6 +62,7 @@ public class GradeQueryService implements IServiceMonitor {
             ResultModel minor = new ResultModel(
                     calculator.getMinorGradePoint(),
                     calculator.getMinorPointPassed(),
+                    calculator.getMinorGradeTotal(),
                     calculator.getMinorPointTotal(),
                     calculator.getMinorElective(),
                     calculator.getMinorCourses()

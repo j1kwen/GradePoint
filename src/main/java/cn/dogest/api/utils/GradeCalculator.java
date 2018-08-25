@@ -118,7 +118,7 @@ public class GradeCalculator {
             BigDecimal c_grade = sumPoint.compareTo(BigDecimal.ZERO) == 0
                     ? BigDecimal.ZERO
                     : sumProduct.divide(sumPoint, 14, BigDecimal.ROUND_UP); // 分母为0说明课程为空，要单独判断
-            return new PointModel(c_grade, c_point, sumPoint, elective); // 构造成绩模型并返回
+            return new PointModel(c_grade, c_point, sumProduct, sumPoint, elective); // 构造成绩模型并返回
         } catch (Exception e) {
             throw new CalculateException("计算过程发生错误！请稍后重试！", e);
         }
@@ -161,6 +161,13 @@ public class GradeCalculator {
         return major.getPoint();
     }
     /**
+     * 获取主修专业总绩点
+     * @return
+     */
+    public BigDecimal getMajorGradeTotal() {
+        return major.getGradeTotal();
+    }
+    /**
      * 获取主修专业总学分
      * @return
      */
@@ -180,6 +187,13 @@ public class GradeCalculator {
      */
     public BigDecimal getMinorPointTotal() {
         return minor.getPointTotal();
+    }
+    /**
+     * 获取辅修专业总绩点
+     * @return
+     */
+    public BigDecimal getMinorGradeTotal() {
+        return minor.getGradeTotal();
     }
     /**
      * 获取主修课程成绩列表

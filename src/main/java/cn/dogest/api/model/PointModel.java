@@ -9,15 +9,17 @@ import java.math.BigDecimal;
 public class PointModel {
     private BigDecimal grade = BigDecimal.ZERO; // 绩点
     private BigDecimal point = BigDecimal.ZERO; // 已修学分(除公选课）
+    private BigDecimal gradeTotal = BigDecimal.ZERO; // 总绩点
     private BigDecimal pointTotal = BigDecimal.ZERO; // 总学分（除公选课）
     private BigDecimal elective = BigDecimal.ZERO; // 公选课学分
 
     public PointModel() {
     }
 
-    public PointModel(BigDecimal grade, BigDecimal point, BigDecimal pointTotal, BigDecimal elective) {
+    public PointModel(BigDecimal grade, BigDecimal point, BigDecimal gradeTotal, BigDecimal pointTotal, BigDecimal elective) {
         this.grade = grade;
         this.point = point;
+        this.gradeTotal = gradeTotal;
         this.pointTotal = pointTotal;
         this.elective = elective;
     }
@@ -36,5 +38,9 @@ public class PointModel {
 
     public BigDecimal getElective() {
         return elective;
+    }
+
+    public BigDecimal getGradeTotal() {
+        return gradeTotal;
     }
 }
